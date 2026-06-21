@@ -1,0 +1,16 @@
+{
+  "name": "gdd-studio",
+  "owner": {
+    "name": "TooruTora",
+    "url": "https://github.com/TooruTora"
+  },
+  "description": "GDD 스튜디오 — 게임 기획팀 워크플로우 플러그인 마켓플레이스",
+  "plugins": [
+    {
+      "name": "gdd-studio",
+      "source": ".",
+      "description": "AI 에이전트로 구성된 게임 기획팀. 게임 컨셉, 시스템 GDD, 내러티브·레벨 기획 전 과정을 지원합니다.",
+      "category": "productivity"
+    }
+  ]
+}
