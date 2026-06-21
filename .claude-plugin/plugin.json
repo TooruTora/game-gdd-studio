@@ -1,7 +1,7 @@
 {
   "name": "gdd-studio",
   "displayName": "GDD 스튜디오",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI 에이전트로 구성된 게임 기획팀. 게임 컨셉 정의부터 시스템 GDD 작성, 내러티브·레벨 기획까지 GDD 전 과정을 지원합니다.",
   "author": {
     "name": "TooruTora",
