@@ -16,9 +16,10 @@ argument-hint: "[시스템명] (예: combat, progression, crafting)"
 2. **사전 컨텍스트 로드:**
    - `design/concept/game-concept.md` 읽기 (존재하면)
    - `design/registry/entities.yaml` 읽기 (존재하면)
+   - `${CLAUDE_PLUGIN_ROOT}/templates/game-design-document.md` 읽기 (8섹션 GDD 표준 템플릿 — 스켈레톤 구조와 각 섹션 작성의 기준)
 
 3. **스켈레톤 파일 먼저 생성:**
-   `design/gdd/$ARGUMENTS.md`를 8개 섹션 헤더만 있는 빈 파일로 즉시 생성합니다.
+   `${CLAUDE_PLUGIN_ROOT}/templates/game-design-document.md` 템플릿의 섹션 구조(8개 표준 섹션 + Summary·Visual/Audio·Open Questions 보조 섹션)를 기반으로 `design/gdd/$ARGUMENTS.md`를 섹션 헤더만 있는 빈 파일로 즉시 생성합니다.
    "스켈레톤을 design/gdd/$ARGUMENTS.md에 생성해도 될까요?"
 
 4. **섹션별 순서대로 작성 (각 섹션마다 대화 → 초안 → 승인 → 작성):**
