@@ -5,7 +5,7 @@
 ## 핵심 원칙
 
 - **정본(canonical source)은 항상 Markdown(`.md`)** — 에이전트 간 컨텍스트 공유, 후속 커맨드(`/gdd-review`, `/gdd-review-all`), 버전 관리의 기준입니다.
-- **사용자에게 보여주는 표시본은 HTML** — 가독성 있는 뷰. md 정본과 항상 동일한 내용을 담습니다.
+- **사용자에게 보여주는 표시본은 인터랙티브 HTML 뷰어** — 긴 문서를 탐색하기 쉽게 목차·검색·접기를 제공합니다. md 정본과 항상 동일한 내용을 담습니다.
 - **md를 생성하거나 갱신할 때마다 대응 html을 함께 생성/갱신**합니다. (md 정본이 승인·기록되면 html은 별도 승인 없이 자동 동반 생성)
 
 ## 파일 위치 규칙
@@ -20,64 +20,46 @@
 | `design/narrative/world.md` | `design/html/narrative/world.html` |
 | `design/levels/level-01.md` | `design/html/levels/level-01.html` |
 
-## HTML 생성 규칙
+## HTML 생성 방법 (뷰어 템플릿 사용)
 
-- **자가완결형(self-contained) 단일 `.html`** — 외부 파일·CDN 의존 없이 브라우저에서 바로 열립니다.
-- md 내용을 충실히 렌더링: 제목, 표, 목록, 코드블록, 인용, 강조 등.
-- 아래 **표준 스타일을 `<head>`에 인라인**으로 넣어 문서 간 일관성을 유지합니다.
-- 한국어 본문 가독성 우선.
-- 문서 상단에 제목과, 그 아래 `정본: design/.../X.md` 출처를 `<p class="source">`로 표기합니다.
+HTML은 직접 스타일을 짜지 말고 **반드시 뷰어 템플릿을 셸로 사용**합니다. 템플릿이 목차 자동생성·검색·스크롤 강조·섹션 접기·다크모드를 모두 인라인으로 처리하므로, 매번 일관된 결과가 나옵니다.
 
-## 표준 HTML 스타일
+### 절차
 
-생성하는 모든 html의 `<head>`에 아래 `<style>`을 그대로 인라인합니다.
+1. `${CLAUDE_PLUGIN_ROOT}/templates/gdd-view.html`을 **Read**한다.
+2. 템플릿의 **3개 플레이스홀더만** 치환한다 (그 외 `<style>`·`<script>`는 **절대 수정 금지**):
+   - `{{TITLE}}` → 문서 제목 (예: `전투 시스템 GDD`)
+   - `{{SOURCE}}` → 정본 경로 표기 (예: `정본: design/gdd/combat.md`)
+   - `{{CONTENT}}` → **md 본문을 HTML로 렌더한 조각** (아래 렌더 규칙 참고)
+3. 치환된 전체 HTML을 `design/html/.../X.html`로 **Write**한다.
 
-```html
-<style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, "Segoe UI", "Malgun Gothic", system-ui, sans-serif;
-         line-height: 1.7; max-width: 860px; margin: 2rem auto; padding: 0 1.25rem;
-         color: #1a1a1a; background: #fff; }
-  h1, h2, h3 { line-height: 1.3; font-weight: 700; }
-  h1 { font-size: 1.9rem; border-bottom: 3px solid #4f46e5; padding-bottom: .4rem; }
-  h2 { font-size: 1.4rem; margin-top: 2.2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: .3rem; }
-  h3 { font-size: 1.15rem; margin-top: 1.6rem; color: #4f46e5; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #d1d5db; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #f3f4f6; font-weight: 600; }
-  code { background: #f3f4f6; padding: .15rem .4rem; border-radius: 4px;
-         font-family: "Cascadia Code", Consolas, monospace; font-size: .9em; }
-  pre { background: #1e1e2e; color: #e5e7eb; padding: 1rem; border-radius: 8px; overflow-x: auto; }
-  pre code { background: none; color: inherit; padding: 0; }
-  blockquote { border-left: 4px solid #4f46e5; margin: 1rem 0; padding: .3rem 1rem;
-               background: #f8f7ff; color: #444; }
-  .source { font-size: .85rem; color: #6b7280; margin-top: -.4rem; }
-</style>
-```
+### 본문(`{{CONTENT}}`) 렌더 규칙
 
-### 골격 예시
+md 본문을 표준 HTML로 변환해 넣는다. 뷰어의 목차·접기 기능이 작동하려면 **헤딩 레벨을 정확히** 지켜야 한다.
 
-```html
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>[문서 제목]</title>
-  <style>/* 위 표준 스타일 */</style>
-</head>
-<body>
-  <h1>[문서 제목]</h1>
-  <p class="source">정본: design/gdd/combat.md</p>
-  <!-- md 본문을 렌더링한 HTML -->
-</body>
-</html>
-```
+- 문서 제목 `#` → `<h1>` (문서당 1개, 본문 맨 위)
+- 섹션 `##` → `<h2>` (목차 1레벨 + 접기 단위가 됨)
+- 하위 `###` → `<h3>` (목차 2레벨)
+- 표 → `<table><thead>…</thead><tbody>…</tbody></table>`
+- 목록 → `<ul>`/`<ol><li>`, 강조 → `<strong>`/`<em>`
+- 코드/공식 → `<pre><code>…</code></pre>`, 인라인 → `<code>`
+- 인용/콜아웃 → `<blockquote>`
+- `<section>`이나 목차는 **직접 만들지 말 것** — 템플릿 스크립트가 `<h2>` 기준으로 자동 생성한다.
+
+## 뷰어 동작 (참고)
+
+생성된 html은 외부 의존성 없는 단일 파일이며 다음을 제공한다:
+
+- **좌측 사이드바 목차** — `h2`·`h3` 자동 추출, 클릭 점프, 현재 위치 자동 강조(스크롤스파이)
+- **문서 내 검색** — 일치 섹션 필터 + 단어 하이라이트 + 일치 개수 표시
+- **섹션 접기/펼치기** — 섹션 제목 클릭
+- **다크모드 토글** — 우상단. **기본은 라이트모드**, 토글로 다크 전환(선택 기억)
+- **상단 진행바 / 맨 위로 버튼 / 모바일 햄버거 메뉴**
 
 ## 워크플로 통합
 
 1. md 정본을 생성/승인/갱신한다. (섹션 단위 승인 게이트는 기존대로 md 기준으로 진행)
-2. md가 기록되면, 같은 내용을 위 규칙으로 html로 변환해 `design/html/...`에 쓴다. (자동 — 별도 승인 불필요)
+2. md가 기록되면, 위 절차로 뷰어 html을 만들어 `design/html/...`에 쓴다. (자동 — 별도 승인 불필요)
 3. 작업 완료 시 사용자에게 html 표시본 경로를 안내한다.
    예: `표시본: design/html/gdd/combat.html (브라우저로 열어보세요)`
 

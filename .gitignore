@@ -4,6 +4,9 @@
 # 개인 로컬 설정
 .claude/settings.local.json
 
+# 뷰어 미리보기/데모 임시 파일
+.preview/
+
 # OS / 에디터
 Thumbs.db
 .DS_Store
