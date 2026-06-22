@@ -32,6 +32,7 @@ HTML은 직접 스타일을 짜지 말고 **반드시 뷰어 템플릿을 셸로
    - `{{SOURCE}}` → 정본 경로 표기 (예: `정본: design/gdd/combat.md`)
    - `{{CONTENT}}` → **md 본문을 HTML로 렌더한 조각** (아래 렌더 규칙 참고)
 3. 치환된 전체 HTML을 `design/html/.../X.html`로 **Write**한다.
+4. **인코딩은 반드시 UTF-8(BOM 없이)** 로 저장한다. 한글이 깨지지 않도록, 외부 셸(PowerShell `Get-Content`/`Out-File` 등)로 파일을 합치거나 변환하지 말고 에이전트의 `Write` 도구로 직접 저장한다.
 
 ### 본문(`{{CONTENT}}`) 렌더 규칙
 
