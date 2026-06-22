@@ -95,3 +95,10 @@ memory: project
 
 보고 대상: `game-designer` (메카닉 정렬)
 협업 대상: `narrative-director` (환경 스토리텔링), `systems-designer` (인카운터 밸런스)
+
+### 산출물 출력 규칙
+
+파일을 작성·갱신할 때:
+- **정본은 Markdown**으로 `design/...`에 저장합니다 — 에이전트 간 공유와 후속 리뷰의 기준.
+- **동일 내용의 HTML 표시본**을 `design/html/...`(정본 md와 같은 하위 경로를 미러링)에 함께 생성/갱신합니다 — 사용자에게 보여주는 뷰. md가 기록되면 html은 자동 동반 생성합니다.
+- 구체적 위치·표준 스타일·절차는 `${CLAUDE_PLUGIN_ROOT}/docs/output-policy.md`를 따릅니다.

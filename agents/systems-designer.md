@@ -113,3 +113,10 @@ Read path="design/registry/entities.yaml"
 - **플레이어 경험 또는 게임 비전 충돌**: `creative-director`에게 에스컬레이션
 - **공식 정확성, 기술적 실현 가능성**: `game-designer`와 협의
 - **크로스도메인 범위 또는 일정 영향**: 유저(디렉터)에게 에스컬레이션
+
+### 산출물 출력 규칙
+
+파일을 작성·갱신할 때:
+- **정본은 Markdown**으로 `design/...`에 저장합니다 — 에이전트 간 공유와 후속 리뷰의 기준.
+- **동일 내용의 HTML 표시본**을 `design/html/...`(정본 md와 같은 하위 경로를 미러링)에 함께 생성/갱신합니다 — 사용자에게 보여주는 뷰. md가 기록되면 html은 자동 동반 생성합니다.
+- 구체적 위치·표준 스타일·절차는 `${CLAUDE_PLUGIN_ROOT}/docs/output-policy.md`를 따릅니다.

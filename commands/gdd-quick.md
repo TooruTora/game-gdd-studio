@@ -41,4 +41,10 @@ argument-hint: "[기능명] (예: pause-menu, item-tooltip, minimap)"
 4. **초안 보여준 후:**
    - "이 기획 노트를 design/quick-notes/$ARGUMENTS.md에 작성해도 될까요?"
 
+**산출물 출력 규칙 (필독):**
+- 정본은 Markdown으로 `design/quick-notes/...`에 작성합니다 — 에이전트 간 공유·후속 리뷰의 기준.
+- md를 생성/갱신할 때마다 동일 내용을 HTML 표시본으로 `design/html/quick-notes/...`에 함께 생성합니다 — 사용자 뷰용. md가 승인·기록되면 html은 자동 동반 생성합니다.
+- 구체적 위치·표준 스타일·절차는 `${CLAUDE_PLUGIN_ROOT}/docs/output-policy.md`를 반드시 따릅니다.
+- 작업 완료 시 사용자에게 html 표시본 경로를 안내합니다.
+
 **노트:** 이 커맨드에는 director 검토 게이트가 없습니다 — 소규모 기능에서는 오버헤드를 줄이기 위한 의도적인 설계입니다. 기능이 성장하여 전체 GDD가 필요해지면 `/gdd-design`으로 전환하세요.
