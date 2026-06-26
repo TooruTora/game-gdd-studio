@@ -10,7 +10,7 @@ argument-hint: "[시스템명] (예: combat, progression, crafting)"
 **워크플로우:**
 
 1. **기존 파일 확인:**
-   - `design/gdd/$ARGUMENTS.md`가 존재하면: 현재 내용을 읽고 "업데이트 모드"로 진입 (어떤 섹션을 수정할지 질문)
+   - `design/gdd/$ARGUMENTS.md`가 존재하면: 현재 내용을 읽고 "업데이트 모드"로 진입 (어떤 섹션을 수정할지 질문). **수정으로 md를 갱신하면 대응 html(`design/html/gdd/$ARGUMENTS.html`)도 md 전체를 다시 렌더해 반드시 재생성합니다.**
    - 존재하지 않으면: 새 GDD 작성 시작
 
 2. **사전 컨텍스트 로드:**

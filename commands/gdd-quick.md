@@ -19,7 +19,7 @@ argument-hint: "[기능명] (예: pause-menu, item-tooltip, minimap)"
 **워크플로우 (범위 내인 경우):**
 
 1. **기존 파일 확인:**
-   - `design/quick-notes/$ARGUMENTS.md`가 존재하면: 현재 내용을 보여주고 업데이트 여부 질문
+   - `design/quick-notes/$ARGUMENTS.md`가 존재하면: 현재 내용을 보여주고 업데이트 여부 질문. **수정으로 md를 갱신하면 대응 html(`design/html/quick-notes/$ARGUMENTS.html`)도 md 전체를 다시 렌더해 반드시 재생성합니다.**
 
 2. **3가지 질문으로 시작:**
    - 이 기능이 정확히 무엇을 하나요?
